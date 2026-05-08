@@ -1,109 +1,112 @@
-# 🌸 Glow — Skincare Advisor
+🌸 Glow — Монголын Skincare Advisor
 
-Монголын онлайн дэлгүүрүүдээс арьс арчилгааны бүтээгдэхүүний мэдээлэл цуглуулж, хэрэглэгчид зориулсан зөвлөх систем.
+Орц найрлагын дүн шинжилгээнд суурилсан арьс арчилгааны зөвлөгч систем
 
----
+📌 Төслийн тухай
+Glow нь Монголын онлайн гоо сайхны дэлгүүрүүдээс бүтээгдэхүүний мэдээллийг цуглуулж, орц найрлагын шинжлэх ухааны дүн шинжилгээнд тулгуурлан хэрэглэгчийн арьсны төрөлд хамгийн тохирох бүтээгдэхүүнийг зөвлөдөг систем юм.
+Энэхүү төсөл нь эдийн засгийн судалгааны зорилгоор хийгдсэн бөгөөд Монголын гоо сайхны зах зээлийн бүтэц, үнийн тархалт, платформ хоорондын харьцуулалт зэрэг эдийн засгийн шинжилгээг агуулдаг.
 
-## 📁 Файлын бүтэц
+📊 Мэдээллийн сан
+Цуглуулсан өгөгдөл
+Эх сурвалжБүтээгдэхүүнАргаbeautysecrets.mn1,712REST APImimicorner.mn790REST APImiruskincare.com609Web scrapingcloudnine.mn14Web scrapingНийт3,105
+Өгөгдлийн бүтэц (ERD)
+products ──── brands
+    │    └─── categories
+    │
+    ├── product_ingredients ──── ingredients
+    │                               │
+    │                    ┌──────────┤
+    │                    │          │
+    │              ingredient_  ingredient_
+    │              concerns    skin_types
+    │                    │          │
+    │              skin_concerns  skin_types
+    └──────────────────────────────────────
+9 хүснэгт:
 
-```
-glow-skincare/
+products — 3,105 бүтээгдэхүүн (нэр, үнэ, үнэлгээ, эх сурвалж)
+brands — 138 брэнд
+categories — 10 ангилал (Serum, Toner, Moisturizer, гэх мэт)
+ingredients — 49 орц найрлага
+product_ingredients — бүтээгдэхүүн-орц холбоос
+ingredient_concerns — орц-арьсны асуудал харьцаа
+ingredient_skin_types — орц-арьсны төрөл харьцаа
+skin_concerns — 4 арьсны асуудал
+skin_types — 5 арьсны төрөл
+
+
+🗂️ Файлын бүтэц
+Glow-skincare-advisor/
 │
-├── app.py                    # Streamlit веб апп (үндсэн UI)
-├── auto_ingredients.py       # Бүтээгдэхүүний найрлага автоматаар таних
+├── 📄 glow-skincare-v3.html      # Үндсэн вэб апп (3,105 бүтээгдэхүүн)
+├── 📊 app.py                     # Streamlit эдийн засгийн шинжилгээ
+├── 🧪 auto_ingredients.py        # Орц найрлага автоматаар таних скрипт
 │
-├── scraper.py                # Scraper v1 — эхний хувилбар
-├── scraper_v2.py             # Scraper v2 — сайжруулсан хувилбар
+├── 🕷️ scraper_v2.py              # Үндсэн scraping скрипт
+├── 🕷️ beautysecrets_scraper.py   # beautysecrets.mn API scraper
+├── 🕷️ mimicorner_scraper.py      # mimicorner.mn API scraper
+├── 🕷️ cloudnine_scraper.py       # cloudnine.mn scraper
 │
-├── beautysecrets_scraper.py  # BeautySecrets.mn зориулалтын scraper
-├── cloudnine_scraper.py      # Cloudnine.mn зориулалтын scraper
-├── mimicorner_scraper.py     # MimiCorner.mn зориулалтын scraper
-│
-├── glow-skincare-v2.html     # Статик HTML прототип (v2)
-│
-├── scraper.log               # Scraper v1 log
-├── scraper_v2.log            # Scraper v2 log
-│
-└── README.md
-```
+├── 🗄️ skincare_project_updated.db # SQLite өгөгдлийн сан
+└── 📋 README.md
 
-> ⚠️ `skincare_project_updated.db` файлыг `.gitignore`-д нэмнэ үү — хэт том байж болно.
+✨ Үндсэн функцүүд
+🌸 Вэб апп (glow-skincare-v3.html)
 
----
+Арьсны төрлөөр зөвлөгөө — Хуурай / Тослог / Холимог / Эмзэг / Хэвийн арьс тус бүрт routine болон орцны зөвлөмж
+Орц найрлагын гарын авлага — 20 орцны тайлбар, хослол, ямар арьсны төрлд тохирох
+AI-д суурилсан шүүлт — Арьсны төрөл + асуудлаар оноо тооцоолж эрэмбэлнэ
+Судалгааны булан — Эрдмийн нотолгоо, эдийн засгийн шинжилгээ
 
-## 🗂️ Өгөгдлийн сан (SQLite)
+📊 Streamlit апп (app.py)
 
-**Хүснэгтүүд:**
+Ангилалаар дундаж үнэ + Box plot
+Платформ хоорондын харьцуулалт (Pie chart, Bar chart)
+Үнийн тархалт (Histogram, дундаж vs медиан)
+Үнийн сегментчлэл (Budget / Mid / Premium / Luxury)
+Үнэ ба үнэлгээний корреляц (Scatter plot + trend line)
+Топ брэндүүдийн үнийн байрлал
 
-| Хүснэгт | Тайлбар |
-|---|---|
-| `products` | Бүтээгдэхүүний нэр, үнэ, үнэлгээ, эх сурвалж |
-| `brands` | Брэнд, улс |
-| `categories` | Ангилал (Serum, Toner, Moisturizer...) |
-| `ingredients` | Орц найрлага |
 
-**Одоогийн өгөгдөл (2026-05-07):**
-- Нийт бүтээгдэхүүн: **624+**
-- Эх сурвалж: `miruskincare.com`, `beautysecrets.mn`, `cloudnine.mn`, `mimicorner.mn`
+🚀 Ажиллуулах заавар
+Вэб апп
+HTML файлыг browser-т нээхэд л болно — нэмэлт суулгалт шаардлагагүй.
+bash# Эсвэл Netlify Drop ашиглана
+# https://app.netlify.com/drop → файл чирж тавина
+Streamlit шинжилгээ
+bash# Суулгах
+pip install streamlit pandas matplotlib numpy
 
----
+# DB замыг тохируулах (app.py дотор)
+DB_PATH = str(Path.home() / "Downloads" / "skincare_project.db")
 
-## 🕷️ Scraper-үүд
-
-| Файл | Эх сурвалж | API |
-|---|---|---|
-| `beautysecrets_scraper.py` | beautysecrets.mn | `https://pink.beautysecrets.mn/api/p/list` |
-| `cloudnine_scraper.py` | cloudnine.mn | `https://cloudnine.nextstore.mn/api/v2/shop/products` |
-| `mimicorner_scraper.py` | mimicorner.mn | `https://mimicorner.mn/api/storefront/products` |
-| `scraper_v2.py` | Олон сайт | Шууд HTML + JSON |
-
-### Ажиллуулах:
-```bash
-python3 beautysecrets_scraper.py
-python3 cloudnine_scraper.py
-python3 mimicorner_scraper.py
-python3 scraper_v2.py
-```
-
----
-
-## 🤖 auto_ingredients.py
-
-Бүтээгдэхүүний нэрнээс орц найрлагыг автоматаар таньж `ingredients` болон `product_ingredients` хүснэгтэд оруулна.
-
-```bash
-python3 auto_ingredients.py
-```
-
----
-
-## 🖥️ Веб апп (Streamlit)
-
-```bash
-pip install streamlit pandas matplotlib
+# Ажиллуулах
 streamlit run app.py
-```
+Scraper ажиллуулах
+bashpip install requests beautifulsoup4 selenium
 
-**Функцүүд:**
-- Бүтээгдэхүүн хайх, шүүх
-- Үнийн харьцуулалт
-- Ангилал, брэндээр харах
-- Орц найрлагын мэдээлэл
+# beautysecrets.mn
+python3 beautysecrets_scraper.py
 
----
+# mimicorner.mn
+python3 mimicorner_scraper.py
 
-## ⚙️ Суулгах
+# Орц найрлага автоматаар нэмэх
+python3 auto_ingredients.py
 
-```bash
-pip install requests sqlite3 pandas matplotlib streamlit
-```
+🧪 Орц таних алгоритм
+auto_ingredients.py нь бүтээгдэхүүний нэрнээс regex pattern matching ашиглан 49 орцыг автоматаар тодорхойлно.
+python# Жишээ
+detect_ingredients("ANUA Niacinamide 10% + TXA 4% Serum", "Serum")
+# → ['Niacinamide', 'Tranexamic Acid', 'Hyaluronic Acid']
+Оноо тооцоолох томьёо:
+Score = (Concern орц × 2) + (Skin type орц × 1) + (Rating × 0.5) + (Орцтой бол +0.5)
 
----
+📈 Эдийн засгийн дүн шинжилгээ
+ШинжилгээҮр дүнНийт бүтээгдэхүүн3,105Дундаж үнэ~43,768₮Медиан үнэ~25,000₮Хамгийн олон бүтээгдэхүүнтэй платформbeautysecrets.mn (55%)Хамгийн өндөр дундаж үнэтэй ангилалSerumҮнэ-чанарын корреляцСул эерэг (r ≈ 0.1–0.2)
+Гол дүгнэлт: Монголын skincare зах зээлд үнэ нь чанарын хүчтэй дохио болдоггүй — "price-quality relationship" сул. Хэрэглэгчид орц найрлага биш брэндийн нэр хүнд, K-pop соёлын нөлөөгөөр худалдан авалтын шийдвэр гаргадаг байна.
 
-## 📊 Ангилалууд
+👩‍💻 Зохиогч
+Энэхүү төсөл нь Монголын гоо сайхны зах зээлийн эдийн засгийн судалгаа болон хэрэглэгчдэд мэдлэгт суурилсан худалдан авалтын шийдвэр гаргахад туслах зорилготой хийгдсэн.
 
-`OilCleanser` · `Cleanser` · `Toner` · `Serum` · `Essence` · `Sunscreen` · `Moisturizer` · `Mask` · `Eye Care` · `Other`
-
----
-
-*Гlow Skincare Advisor — Монгол хэрэглэгчдэд зориулсан K-beauty зөвлөх систем 🌸*
+🌸 Glow — Орц найрлага мэдэж, ухаалгаар сонго
